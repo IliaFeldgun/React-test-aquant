@@ -36,6 +36,7 @@ class App extends React.Component {
   
   render(){
     return (
+      <div id="bingMapsApp">
       <div>
         <MarkersManagementList markerList={this.state.locationList}></MarkersManagementList>
       </div>
@@ -45,6 +46,7 @@ class App extends React.Component {
           {addHandler: "click", callback:this.AddPushPinOnClick}
         }> 
       </ReactBingmaps>
+      </div>
     );
   }
 }
