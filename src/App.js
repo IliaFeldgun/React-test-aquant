@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-//import {Map} from './MapComponents';
+import {Map} from './MapComponents';
 import {MarkersForm} from './FormComponents';
 import {MarkersManagementList} from './MarkerComponents';
 
@@ -52,11 +52,14 @@ class App extends React.Component {
         <MarkersForm markerList={this.state.markerList} handleSubmit={this.handleSubmit}/>
       </div>
       <div>
-        <MarkersManagementList markerList={this.state.markerList} handleListChange={this.handleListChange}></MarkersManagementList>
+        <MarkersManagementList 
+          markerList={this.state.markerList} 
+          handleListChange={this.handleListChange}/>
       </div>
       <div>
-        {//<Map markerList={[]/*this.state.markerList*/}/>
-  }
+        {
+          //<Map markerList={this.state.markerList}/>
+        }
       </div>
     </div>
     )
