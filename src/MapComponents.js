@@ -3,60 +3,51 @@ import './App.css';
 import { ReactBingmaps } from 'react-bingmaps';
 
 import {MarkersManagementList} from './MarkerComponents';
+import * as mapcontrol from './mapcontrol';
 
 const config = require('./config.json')
 
+
 export class Map extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      /*pushPins : [
-        {
-          "location":[13.0827, 80.2707], "option":{ color: 'red' }, "addHandler": {"type" : "click", callback: this.callBackMethod }
-        }
-      ]*/
-    }
-    this.AddPushPinOnClick = this.AddPushPinOnClick.bind(this);
-
+  mapRef = React.createRef();
+  map;
+  newPushPin;
+  componentDidMount() {
+    mapcontrol.loadBingApi(config.dev.bing_maps_key).then(() => {
+      this.initMap();
+    });
   }
-  /*changeState(){
-    this.setState({
-        pushPins : [
-            {
-              "location":[13.0827, 80.2707], "option":{ color: 'red' }, "addHandler": {"type" : "click", callback: this.callBackMethod }
-            }
-          ]
-    })
-    }*/
-  AddPushPinOnClick(location)
+  componentDidUpdate() {
+      this.initPushPins();
+  }
+  initPushPins()
   {
-    let newLocationList = this.state.locationList.slice();
-    newLocationList.push(
+      for(let pin in this.props.markerList)
       {
-        latitude: location.latitude,
-        longtitude: location.longtitude,
+          this.addPushPin(this.props.markerList[pin].longtitude,this.props.markerList[pin].latitude);
       }
-    )
-    this.setState({
-      locationList: newLocationList
-    })
-
-    console.log(newLocationList);
   }
-  
-  render(){
-    return (
-      <div id="bingMapsApp">
-      <div>
-        <MarkersManagementList markerList={this.state.locationList}></MarkersManagementList>
-      </div>
-      <ReactBingmaps 
-        bingmapKey = {config.dev.bing_maps_key}
-      >
-         
-      </ReactBingmaps>
-      </div>
-    );
+  addPushPin(longtitude,latitude)
+  {
+      if(this.map !== undefined)
+      {
+        var pushpin = new this.newPushPin({longtitude: longtitude, latitude: latitude}, null);
+        this.map.entities.push(pushpin);
+      }
+  }
+  render() {
+      this.addPushPin()
+    return <div ref={this.mapRef} className="map" />;
+  }
+
+  initMap() {
+    this.map = new mapcontrol.Microsoft.Maps.Map(this.mapRef.current);
+    this.newPushPin = mapcontrol.Microsoft.Maps.Pushpin
+    //for (let pin in this.props.pushpin)
+    if (this.props.mapOptions) {
+      this.map.setOptions(this.props.mapOptions);
+    }
+    return this.map;
   }
 }
 

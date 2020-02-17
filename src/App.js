@@ -60,7 +60,7 @@ class App extends React.Component {
       </div>
       <div>
         {
-          //<Map markerList={this.state.markerList}/>
+          <Map markerList={this.state.markerList}/>
         }
       </div>
     </div>
