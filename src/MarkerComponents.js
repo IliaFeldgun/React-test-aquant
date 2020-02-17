@@ -1,34 +1,13 @@
 import React from 'react';
 
-export class MarkersManagementList extends React.Component{
-    constructor(props) {
-      super(props);
-      this.state = {
-        markerList : []
-      }
-
-      this.handleListChange = this.handleListChange.bind(this)
-    }
-
-    conmponentDidMount() {
-        this.setState(
-            {markerList: this.props.markerList}
-        )
-    }
-    
-    handleListChange(item)
-    {
-      let newList = this.state.markerList.slice().pop(item) // this needs to remove relevant marker
-  
-      this.setState({
-        markerList: newList
-      })
-    }
-  
+export class MarkersManagementList extends React.Component{  
     render(){
-      let list = this.state.markerList.map(
+      let list = this.props.markerList.map(
           marker => (
-              <Marker markerDetails={marker} key={marker.longtitude} onDelete={this.handleListChange}/> // needs to be changed to a better key
+              <Marker 
+                markerDetails={marker} 
+                key={marker.longtitude}  // needs to be changed to a better key
+                onDelete={this.props.handleListChange}/>
           )
         
       )
@@ -41,20 +20,13 @@ export class MarkersManagementList extends React.Component{
   }
   
   class Marker extends React.Component{
-    /*constructor(props) {
-      super(props);
-      
-  
-    }*/
-    
-
-    render(){
+      render(){
       return (
         <div className="marker">
-          <h2 className="coordinates">
-            {this.props.markerDetails.longtitude}, {this.props.markerDetails.latitude}
-          </h2>
-          <div onClick={this.props.onDelete}>Delete</div>
+          <form className="coordinates">
+            <div>{this.props.markerDetails.longtitude}, {this.props.markerDetails.latitude}</div>
+            <div onClick={this.props.onDelete} longtitude={this.props.markerDetails.longtitude} latitude={this.props.markerDetails.latitude}>Delete</div>
+          </form>
         </div>
       )
     }

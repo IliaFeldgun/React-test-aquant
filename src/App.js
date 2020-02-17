@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
 
-import {Map} from './MapComponents';
+//import {Map} from './MapComponents';
 import {MarkersForm} from './FormComponents';
+import {MarkersManagementList} from './MarkerComponents';
 
 
 
@@ -14,6 +15,17 @@ class App extends React.Component {
     }
     
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleListChange = this.handleListChange.bind(this)
+  }
+
+  handleListChange(e)
+  {
+    let newList = this.state.markerList.filter(item => 
+      item.longtitude !== e.target.getAttribute("longtitude") && 
+      item.latitude !== e.target.getAttribute("latitude"))
+    this.setState({
+      markerList: newList
+    })
   }
   
   handleSubmit(e)
@@ -24,8 +36,6 @@ class App extends React.Component {
           {
               longtitude: e.target.longtitude.value,
               latitude: e.target.latitude.value
-
-
           }
       );
       this.setState(
@@ -33,8 +43,6 @@ class App extends React.Component {
               markerList: newMarkerList
           }
       )
-
-      console.log(this.state)
   }
   
   render(){
@@ -44,7 +52,11 @@ class App extends React.Component {
         <MarkersForm markerList={this.state.markerList} handleSubmit={this.handleSubmit}/>
       </div>
       <div>
-        <Map markerList={[]/*this.state.markerList*/}/>
+        <MarkersManagementList markerList={this.state.markerList} handleListChange={this.handleListChange}></MarkersManagementList>
+      </div>
+      <div>
+        {//<Map markerList={[]/*this.state.markerList*/}/>
+  }
       </div>
     </div>
     )
