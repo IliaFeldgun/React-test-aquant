@@ -10,11 +10,10 @@ export class MarkersForm extends React.Component{
 
     handleSubmit(e)
     {
-        
+
     }
-    render{
-        return
-        (
+    render(){
+        return(
             <form onSubmit={this.handleSubmit}>
                 <label>longtitude:
                     <input name="longtitude" type="text" />
