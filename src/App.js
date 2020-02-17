@@ -43,6 +43,8 @@ class App extends React.Component {
               markerList: newMarkerList
           }
       )
+
+      e.target.reset()
   }
   
   render(){
