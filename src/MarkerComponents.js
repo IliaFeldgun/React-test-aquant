@@ -2,15 +2,20 @@ import React from 'react';
 
 export class MarkersManagementList extends React.Component{  
     render(){
-      let list = this.props.markerList.map(
-          marker => (
-              <Marker 
-                markerDetails={marker} 
-                key={marker.longtitude}  // needs to be changed to a better key
-                onDelete={this.props.handleListChange}/>
-          )
-        
-      )
+        let list;
+
+        if (this.props.markerList != undefined)
+        {
+            list = this.props.markerList.map(
+                marker => (
+                    <Marker 
+                        markerDetails={marker} 
+                        key={marker.longtitude}  // needs to be changed to a better key
+                        onDelete={this.props.handleListChange}/>
+                )
+                
+            ) 
+        }
       return (
         <div id="markerList">
             {list}
