@@ -32,19 +32,28 @@ class App extends React.Component {
   {
       e.preventDefault();
       let newMarkerList = this.state.markerList.slice();
-      newMarkerList.push(
-          {
-              longtitude: e.target.longtitude.value,
-              latitude: e.target.latitude.value
-          }
-      );
-      this.setState(
-          {
-              markerList: newMarkerList
-          }
-      )
+      let newLongtitude = e.target.longtitude.value
+      let newLatitude = e.target.latitude.value
+      if (newLatitude !== undefined && newLongtitude !== undefined)
+      {
+        newMarkerList.push(
+            {
+                longtitude: newLongtitude,
+                latitude: newLatitude
+            }
+        );
+        this.setState(
+            {
+                markerList: newMarkerList
+            }
+        )
 
-      e.target.reset()
+        e.target.reset()
+      }
+      else
+      {
+        alert("Invalid input, perhaps you left an empty field?")
+      }
   }
   
   render(){
