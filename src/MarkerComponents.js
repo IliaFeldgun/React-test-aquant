@@ -4,7 +4,7 @@ export class MarkersManagementList extends React.Component{
     render(){
         let list;
 
-        if (this.props.markerList != undefined)
+        if (this.props.markerList !== undefined)
         {
             list = this.props.markerList.map(
                 marker => (
