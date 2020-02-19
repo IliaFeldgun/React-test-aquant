@@ -8,25 +8,27 @@ export class Map extends React.Component {
   }
 
   componentDidUpdate() {
-    this.initPushPins()
-    this.initLines()
-  }
-
-  initPushPins()
-  {
+    
     if(this.props.map !== undefined)
     {
       this.props.map.entities.clear();
       this.locationList = [];
-      for(let pin in this.props.markerList)
-      {
-          this.addPushPin(this.props.markerList[pin].latitude, this.props.markerList[pin].longitude);
-      }
+      
+      this.initPushPins()
+      this.initLines()
     }
+  }
+
+  initPushPins()
+  {
+    this.props.markerList.forEach(pin => {
+      this.addPushPin(pin.latitude, pin.longitude);
+      });
+  
   }
   initLines()
   {
-    if(this.props.map !== undefined && this.locationList.length > 1)
+    if(this.locationList.length > 1)
     {
       let line = new mapcontrol.Microsoft.Maps.Polyline(this.locationList)
       
