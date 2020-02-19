@@ -17,7 +17,7 @@ export class Map extends React.Component {
     if(this.props.map !== undefined)
     {
       this.props.map.entities.clear();
-
+      this.locationList = [];
       for(let pin in this.props.markerList)
       {
           this.addPushPin(this.props.markerList[pin].latitude, this.props.markerList[pin].longitude);
