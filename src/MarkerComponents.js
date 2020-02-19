@@ -10,14 +10,15 @@ export class MarkersManagementList extends React.Component{
                 marker => (
                     <Marker 
                         markerDetails={marker} 
-                        key={marker.longtitude}  // needs to be changed to a better key
+                        key={marker.longitude + "," + marker.latitude}  // needs to be changed to a better key
                         onDelete={this.props.handleListChange}/>
                 )
                 
             ) 
         }
       return (
-        <div id="markerList">
+        <div id="markerlist">
+          A list of your markers:
             {list}
         </div>
       )
@@ -29,8 +30,12 @@ export class MarkersManagementList extends React.Component{
       return (
         <div className="marker">
           <form className="coordinates">
-            <div>{this.props.markerDetails.longtitude}, {this.props.markerDetails.latitude}</div>
-            <div onClick={this.props.onDelete} longtitude={this.props.markerDetails.longtitude} latitude={this.props.markerDetails.latitude}>Delete</div>
+            <div>{this.props.markerDetails.latitude}, {this.props.markerDetails.longitude}</div>
+            <div id="deletebutton" onClick={this.props.onDelete} 
+                 latitude={this.props.markerDetails.latitude} 
+                 longitude={this.props.markerDetails.longitude}>
+              Delete
+            </div>
           </form>
         </div>
       )
