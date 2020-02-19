@@ -4,6 +4,7 @@ import './App.css';
 import {Map} from './Components/MapComponents';
 import {MarkersForm} from './Components/FormComponents';
 import {MarkersManagementList} from './Components/MarkerComponents';
+
 import * as mapcontrol from './Apis/mapcontrol';
 
 const config = require('./config.json')
@@ -11,6 +12,8 @@ const config = require('./config.json')
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.mapRef = React.createRef();
+    
     this.state = {
       markerList : [],
       map : {}
@@ -19,7 +22,8 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleListChange = this.handleListChange.bind(this)
   }
-  mapRef = React.createRef();
+  
+  
 
   handleListChange(e)
   {
@@ -37,8 +41,15 @@ class App extends React.Component {
       let newMarkerList = this.state.markerList.slice();
       let newLatitude = e.target.latitude.value
       let newLongitude = e.target.longitude.value
-
-      if (newLatitude && newLongitude)
+      if (newLatitude > 90 || newLatitude < -90)
+      {
+        alert("ïnvalid latitude")
+      }
+      else if (newLongitude > 180 || newLongitude < -180)
+      {
+        alert("ïnvalid longitude")
+      }
+      else if (newLatitude && newLongitude)
       {
         newMarkerList.push(
             {
