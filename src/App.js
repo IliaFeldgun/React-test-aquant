@@ -4,25 +4,28 @@ import './App.css';
 import {Map} from './MapComponents';
 import {MarkersForm} from './FormComponents';
 import {MarkersManagementList} from './MarkerComponents';
+import * as mapcontrol from './mapcontrol';
 
-
+const config = require('./config.json')
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      markerList : []
+      markerList : [],
+      map : {}
     }
     
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleListChange = this.handleListChange.bind(this)
   }
+  mapRef = React.createRef();
 
   handleListChange(e)
   {
     let newList = this.state.markerList.filter(item => 
-      item.longtitude !== e.target.getAttribute("longtitude") && 
-      item.latitude !== e.target.getAttribute("latitude"))
+      item.latitude !== e.target.getAttribute("latitude") &&
+      item.longitude !== e.target.getAttribute("longitude") )
     this.setState({
       markerList: newList
     })
@@ -32,14 +35,15 @@ class App extends React.Component {
   {
       e.preventDefault();
       let newMarkerList = this.state.markerList.slice();
-      let newLongtitude = e.target.longtitude.value
       let newLatitude = e.target.latitude.value
-      if (newLatitude !== undefined && newLongtitude !== undefined)
+      let newLongitude = e.target.longitude.value
+
+      if (newLatitude && newLongitude)
       {
         newMarkerList.push(
             {
-                longtitude: newLongtitude,
-                latitude: newLatitude
+              latitude: newLatitude,
+              longitude: newLongitude
             }
         );
         this.setState(
@@ -55,21 +59,38 @@ class App extends React.Component {
         alert("Invalid input, perhaps you left an empty field?")
       }
   }
-  
+  componentDidMount() {
+    mapcontrol.loadBingApi(config.dev.bing_maps_key).then(() => {
+      this.initMap()
+    });
+  }  
+  initMap() {
+    let newMap = new mapcontrol.Microsoft.Maps.Map(this.mapRef.current);
+    //this.mapPushPin = mapcontrol.Microsoft.Maps.Pushpin
+    //this.mapLocation = mapcontrol.Microsoft.Maps.Location
+    //for (let pin in this.props.pushpin)
+    if (this.props.mapOptions) {
+      this.map.setOptions(this.props.mapOptions);
+    }
+
+    this.setState({
+      map: newMap
+    })
+    return newMap;
+  }
   render(){
     return (
-    <div>
-      <div>
-        <MarkersForm markerList={this.state.markerList} handleSubmit={this.handleSubmit}/>
-      </div>
-      <div>
-        <MarkersManagementList 
-          markerList={this.state.markerList} 
-          handleListChange={this.handleListChange}/>
-      </div>
-      <div>
+    <div id="bingmarkers">
+      <MarkersForm markerList={this.state.markerList} 
+                    handleSubmit={this.handleSubmit} />
+      <MarkersManagementList 
+        markerList={this.state.markerList} 
+        handleListChange={this.handleListChange} />
+      <div id="mapcontainer">
         {
-          <Map markerList={this.state.markerList}/>
+          <Map markerList={this.state.markerList} 
+               mapRef={this.mapRef} 
+               map={this.state.map} />
         }
       </div>
     </div>
