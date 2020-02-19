@@ -12,53 +12,33 @@ export class Map extends React.Component {
       markerList : []
     }
   }
-  mapRef = React.createRef();
-  map;
-  mapPushPin;
-  mapLocation;
-
-  componentDidMount() {
-    mapcontrol.loadBingApi(config.dev.bing_maps_key).then(() => {
-      this.initMap()
-    });
-  }
 
   componentDidUpdate() {
     this.initPushPins()
   }
+
   initPushPins()
   {
-    if(this.map !== undefined)
+    if(this.props.map !== undefined)
     {
-      this.map.entities.clear();
+      this.props.map.entities.clear();
 
       for(let pin in this.props.markerList)
       {
-          this.addPushPin(this.props.markerList[pin].longtitude,this.props.markerList[pin].latitude);
+          this.addPushPin(this.props.markerList[pin].latitude, this.props.markerList[pin].longitude);
       }
     }
   }
-  addPushPin(longtitude,latitude)
+
+  addPushPin(latitude, longitude)
   {
-    //if(this.map.EntityCollection)
-    let location = new this.mapLocation(longtitude,latitude)
-    let pushpin = new this.mapPushPin(location, null)
-    this.map.entities.push(pushpin)
+    let location = new mapcontrol.Microsoft.Maps.Location(latitude, longitude)
+    let pushpin = new mapcontrol.Microsoft.Maps.Pushpin(location, null)
+    this.props.map.entities.push(pushpin)
   
   }
   render() {
-    return <div ref={this.mapRef} className="map" />;
-  }
-
-  initMap() {
-    this.map = new mapcontrol.Microsoft.Maps.Map(this.mapRef.current);
-    this.mapPushPin = mapcontrol.Microsoft.Maps.Pushpin
-    this.mapLocation = mapcontrol.Microsoft.Maps.Location
-    //for (let pin in this.props.pushpin)
-    if (this.props.mapOptions) {
-      this.map.setOptions(this.props.mapOptions);
-    }
-    return this.map;
+    return <div ref={this.props.mapRef} className="map" />;
   }
 }
 
