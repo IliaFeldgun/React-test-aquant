@@ -1,3 +1,27 @@
-.map {
-  height:500px;
+html, body, #root, #bingmarkers{
+  height: 100%;
+}
+body {
+  margin: 2px;
+}
+#printoutPanel, #searchBoxContainer {
+  display: inline-block;
+}
+
+#markerlist {
+  display: inline-block;
+  height: 80%;
+  width: 20%;
+  left: 0;
+  top: 0;
+  vertical-align: top;
+}
+#mapcontainer {
+  display: inline-block;
+  width: 80%;
+  height:80%;
+}
+#locationform {
+  width:100%;
+  height: 20%;
 }
