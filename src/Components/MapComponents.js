@@ -4,13 +4,12 @@ import * as mapcontrol from '../Apis/mapcontrol';
 export class Map extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      markerList : []
-    }
+    this.locationList = []
   }
 
   componentDidUpdate() {
     this.initPushPins()
+    this.initLines()
   }
 
   initPushPins()
@@ -25,10 +24,19 @@ export class Map extends React.Component {
       }
     }
   }
-
+  initLines()
+  {
+    if(this.props.map !== undefined && this.locationList.length > 1)
+    {
+      let line = new mapcontrol.Microsoft.Maps.Polyline(this.locationList)
+      
+      this.props.map.entities.push(line);
+    }
+  }
   addPushPin(latitude, longitude)
   {
     let location = new mapcontrol.Microsoft.Maps.Location(latitude, longitude)
+    this.locationList.push(location);
     let pushpin = new mapcontrol.Microsoft.Maps.Pushpin(location, null)
     this.props.map.entities.push(pushpin)
   
