@@ -1,8 +1,7 @@
 import React from 'react';
-import './App.css';
-import * as mapcontrol from './mapcontrol';
+import * as mapcontrol from '../Apis/mapcontrol';
 
-const config = require('./config.json')
+const config = require('../config.json')
 
 
 export class Map extends React.Component {

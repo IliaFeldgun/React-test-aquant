@@ -1,8 +1,8 @@
 import React from 'react';
 //import PlacesAutocomplete, {getLatLng} from 'react-places-autocomplete';
-import * as mapcontrol from './mapcontrol';
+import * as mapcontrol from '../Apis/mapcontrol';
 
-const config = require('./config.json')
+const config = require('../config.json')
 
 export class MarkersForm extends React.Component{
     constructor(props) {

@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 
-import {Map} from './MapComponents';
-import {MarkersForm} from './FormComponents';
-import {MarkersManagementList} from './MarkerComponents';
-import * as mapcontrol from './mapcontrol';
+import {Map} from './Components/MapComponents';
+import {MarkersForm} from './Components/FormComponents';
+import {MarkersManagementList} from './Components/MarkerComponents';
+import * as mapcontrol from './Apis/mapcontrol';
 
 const config = require('./config.json')
 
