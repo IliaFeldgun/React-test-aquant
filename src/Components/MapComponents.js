@@ -1,9 +1,6 @@
 import React from 'react';
 import * as mapcontrol from '../Apis/mapcontrol';
 
-const config = require('../config.json')
-
-
 export class Map extends React.Component {
   constructor(props) {
     super(props);
